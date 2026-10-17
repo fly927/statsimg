@@ -3,6 +3,15 @@ import { ImageResponse } from 'next/og';
 export const runtime = 'edge';
 
 export async function POST(request: Request) {
+  // 1. API-Key aus dem Authorization-Header auslesen
+  const authHeader = request.headers.get('authorization');
+  const expectedKey = process.env.API_KEY;
+
+  // Prüfen, ob der Key übereinstimmt
+  if (!expectedKey || authHeader !== `Bearer ${expectedKey}`) {
+    return new Response('Unauthorized: Ungültiger oder fehlender API-Key', { status: 401 });
+  }
+
   try {
     // JSON-Daten aus dem Request empfangen
     const data = await request.json();
