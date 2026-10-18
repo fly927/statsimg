@@ -2,6 +2,11 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
+// VT323 Schriftart von Google Fonts laden (schön pixelig)
+const fontData = fetch(new URL('https://fonts.gstatic.com/s/vt323/v17/pxiByp8kv8JHgFVrFJDS.ttf')).then((res) =>
+  res.arrayBuffer(),
+);
+
 export async function POST(request) {
   const { searchParams } = new URL(request.url);
   const apiKey = searchParams.get('key');
@@ -14,6 +19,8 @@ export async function POST(request) {
   try {
     const data = await request.json();
 
+    const textGlow = '0 0 10px rgba(255, 255, 255, 0.8), 0 0 5px rgba(255, 255, 255, 0.6)';
+
     return new ImageResponse(
       (
         <div
@@ -23,31 +30,36 @@ export async function POST(request) {
             width: '100%',
             height: '100%',
             backgroundColor: '#0a0a0a',
-            backgroundImage: 'radial-gradient(circle at center, #2e0828 0%, #0d010e 60%, #000000 100%)',
+            backgroundImage: 'radial-gradient(circle at center, rgba(80, 20, 100, 0.4) 0%, rgba(20, 5, 25, 0.9) 60%, rgba(0,0,0,1) 100%), linear-gradient(135deg, rgba(30,10,40,0.3) 0%, rgba(10,30,20,0.3) 100%)',
+            backgroundSize: 'cover',
             color: '#ffffff',
-            fontFamily: 'monospace',
-            padding: '50px 40px',
+            fontFamily: '"VT323", monospace',
+            padding: '60px 40px',
+            alignItems: 'flex-start',
             justifyContent: 'flex-start',
-            gap: '16px',
+            gap: '20px',
           }}
         >
-          {/* Header: [<level>][<rank>] <name> <ping>ms */}
-          <div style={{ display: 'flex', fontSize: '32px', fontWeight: 'bold' }}>
+          {/* Zeile 1: [<level>][<rank>] <name> <ping>ms */}
+          <div style={{
+            display: 'flex',
+            fontSize: '32px',
+            fontWeight: 'normal',
+            textShadow: textGlow,
+          }}>
             <span>[{data.level}]</span>
             <span>[{data.rank}]</span>
-            <span style={{ marginLeft: '8px' }}>{data.name}</span>
-            <span style={{ marginLeft: '8px' }}>{data.ping}ms</span>
+            <span style={{ marginLeft: '10px' }}>{data.name}</span>
+            <span style={{ marginLeft: '10px' }}>{data.ping}ms</span>
           </div>
 
-          {/* Section: Overall */}
+          {/* Zeile 2: Overall (Komplett ohne Unterstreichung oder Balken) */}
           <div
             style={{
               display: 'flex',
               fontSize: '38px',
               fontWeight: 'bold',
-              borderBottom: '3px solid #ffffff',
-              paddingBottom: '4px',
-              width: '180px',
+              textShadow: '0 0 12px rgba(255, 255, 255, 0.9), 0 0 6px rgba(255, 255, 255, 0.7)',
               marginTop: '10px',
               marginBottom: '10px',
             }}
@@ -55,30 +67,54 @@ export async function POST(request) {
             Overall
           </div>
 
-          {/* Finals / Deaths */}
-          <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold' }}>
+          {/* Zeile 3: Finals / Deaths */}
+          <div style={{
+            display: 'flex',
+            fontSize: '28px',
+            textShadow: textGlow,
+          }}>
             Finals: {data.finals} / Deaths: {data.deaths}
           </div>
 
-          {/* FKDR */}
-          <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold' }}>
+          {/* Zeile 4: FKDR */}
+          <div style={{
+            display: 'flex',
+            fontSize: '28px',
+            textShadow: textGlow,
+          }}>
             FKDR: {data.fkdr}
           </div>
 
-          {/* Wins / Losses */}
-          <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold' }}>
+          {/* Zeile 5: Wins / Losses */}
+          <div style={{
+            display: 'flex',
+            fontSize: '28px',
+            textShadow: textGlow,
+          }}>
             Wins: {data.wins} / Losses: {data.losses}
           </div>
 
-          {/* WLR */}
-          <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold' }}>
+          {/* Zeile 6: WLR */}
+          <div style={{
+            display: 'flex',
+            fontSize: '28px',
+            textShadow: textGlow,
+          }}>
             WLR: {data.wlr}
           </div>
         </div>
       ),
       {
         width: 800,
-        height: 450,
+        height: 600,
+        fonts: [
+          {
+            name: 'VT323',
+            data: await fontData,
+            weight: 400,
+            style: 'normal',
+          },
+        ],
       },
     );
   } catch (error) {
