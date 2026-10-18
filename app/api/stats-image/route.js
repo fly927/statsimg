@@ -45,7 +45,7 @@ export async function POST(request) {
             }}
           />
 
-          {/* Inhalt-Container, der sicher über dem Bild liegt */}
+          {/* Inhalt-Container */}
           <div
             style={{
               display: 'flex',
@@ -53,20 +53,20 @@ export async function POST(request) {
               width: '100%',
               height: '100%',
               zIndex: 1,
-              gap: '14px',
+              gap: '12px',
               justifyContent: 'flex-start',
               alignItems: 'flex-start',
             }}
           >
-            {/* Zeile 1: Level, Rank, Name, Ping (Größer als Overall & doppelte Klammern behoben) */}
-            <div style={{ display: 'flex', fontSize: '46px', fontWeight: 'normal' }}>
+            {/* Zeile 1: Level, Rank, Name, Ping */}
+            <div style={{ display: 'flex', fontSize: '44px', fontWeight: 'normal' }}>
               <span>[{data.level}]</span>
               <span style={{ marginLeft: '10px' }}>{data.rank}</span>
               <span style={{ marginLeft: '15px' }}>{data.name}</span>
               <span style={{ marginLeft: '15px' }}>{data.ping}</span>
             </div>
 
-            {/* Zeile 2: Overall (Kleinere Schrift als die Titelzeile) */}
+            {/* Zeile 2: Overall */}
             <div
               style={{
                 display: 'flex',
@@ -97,6 +97,14 @@ export async function POST(request) {
             {/* Zeile 6: WLR */}
             <div style={{ display: 'flex', fontSize: '30px' }}>
               WLR: {data.wlr}
+            </div>
+
+            {/* Leerzeile / Abstandshalter zwischen WLR und Winstreak */}
+            <div style={{ height: '24px' }} />
+
+            {/* Zeile 7: Winstreak */}
+            <div style={{ display: 'flex', fontSize: '30px' }}>
+              Winstreak: {data.winstreak}
             </div>
           </div>
         </div>
