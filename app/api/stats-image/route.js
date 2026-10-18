@@ -2,11 +2,6 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-// Minecraft-Schriftart laden (VT323 von Google Fonts ist perfekt und frei verfügbar)
-const fontData = fetch(new URL('https://fonts.googleapis.com/css2?family=VT323&display=block')).then((res) =>
-  res.arrayBuffer(),
-);
-
 export async function POST(request) {
   const { searchParams } = new URL(request.url);
   const apiKey = searchParams.get('key');
@@ -19,13 +14,11 @@ export async function POST(request) {
   try {
     const data = await request.json();
 
-    // Simuliere den dunklen Vortex-Hintergrund mit CSS-Gradients
     const vortexGradient = `
       radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(50,10,60,1) 50%, rgba(10,50,20,1) 80%, rgba(10,10,10,1) 100%),
       linear-gradient(135deg, rgba(30,10,40,0.3) 0%, rgba(10,30,20,0.3) 100%)
     `;
 
-    // Der Glow-Effekt für den Text
     const textGlow = '0 0 10px rgba(255, 255, 255, 0.8), 0 0 5px rgba(255, 255, 255, 0.6)';
 
     return new ImageResponse(
@@ -36,11 +29,11 @@ export async function POST(request) {
             flexDirection: 'column',
             width: '100%',
             height: '100%',
-            backgroundColor: '#0a0a0a', // Deep dark
+            backgroundColor: '#0a0a0a',
             backgroundImage: vortexGradient,
             backgroundSize: 'cover',
             color: '#ffffff',
-            fontFamily: '"VT323", monospace', // Minecraft-style font
+            fontFamily: 'monospace', // Stabile System-Monospace-Schrift
             padding: '60px 40px',
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
@@ -49,75 +42,67 @@ export async function POST(request) {
         >
           {/* Zeile 1: [<level>] [<rank>] <name> <ping>ms */}
           <div style={{
-            fontSize: '32px',
-            fontWeight: 'normal',
+            fontSize: '36px',
+            fontWeight: 'bold',
             textShadow: textGlow,
           }}>
             <span>[{data.level}]</span>{' '}
             <span style={{ color: '#aaa' }}>[{data.rank}]</span>{' '}
-            <span style={{ color: '#fff', fontWeight: 'bold' }}>{data.name}</span>{' '}
-            <span style={{ color: '#aaa' }}>({data.ping}ms)</span>
+            <span style={{ color: '#fff' }}>{data.name}</span>{' '}
+            <span style={{ color: '#aaa', fontSize: '28px' }}>({data.ping})</span>
           </div>
 
           {/* Zeile 2: Overall */}
           <div style={{
-            fontSize: '38px',
+            fontSize: '42px',
             fontWeight: 'bold',
             borderBottom: '4px solid white',
             paddingBottom: '8px',
             marginBottom: '10px',
-            textShadow: '0 0 12px rgba(255, 255, 255, 0.9), 0 0 6px rgba(255, 255, 255, 0.7)',
+            textShadow: '0 0 12px rgba(255, 255, 255, 0.9)',
           }}>
             Overall
           </div>
 
-          {/* Zeile 3: Finals: [FINALS] / Deaths: [DEATHS] */}
+          {/* Zeile 3: Finals / Deaths */}
           <div style={{
-            fontSize: '28px',
-            textShadow: '0 0 8px rgba(255, 255, 255, 0.7), 0 0 4px rgba(255, 255, 255, 0.5)',
+            fontSize: '32px',
+            textShadow: textGlow,
           }}>
             Finals: {data.finals} / Deaths: {data.deaths}
           </div>
 
-          {/* Zeile 4: FKDR: [FKDR] */}
+          {/* Zeile 4: FKDR */}
           <div style={{
-            fontSize: '28px',
-            textShadow: '0 0 8px rgba(255, 255, 255, 0.7), 0 0 4px rgba(255, 255, 255, 0.5)',
+            fontSize: '32px',
+            textShadow: textGlow,
           }}>
-            FKDR: <span style={{ color: '#00e676', fontWeight: 'bold' }}>{data.fkdr}</span> {/* Farb-Tipp für FKDR */}
+            FKDR: <span style={{ color: '#00e676', fontWeight: 'bold' }}>{data.fkdr}</span>
           </div>
 
-          {/* Zeile 5: Wins: [WINS] / Losses: [LOSSES] */}
+          {/* Zeile 5: Wins / Losses */}
           <div style={{
-            fontSize: '28px',
-            textShadow: '0 0 8px rgba(255, 255, 255, 0.7), 0 0 4px rgba(255, 255, 255, 0.5)',
+            fontSize: '32px',
+            textShadow: textGlow,
           }}>
             Wins: {data.wins} / Losses: {data.losses}
           </div>
 
-          {/* Zeile 6: WLR: [WLR] */}
+          {/* Zeile 6: WLR */}
           <div style={{
-            fontSize: '28px',
-            textShadow: '0 0 8px rgba(255, 255, 255, 0.7), 0 0 4px rgba(255, 255, 255, 0.5)',
+            fontSize: '32px',
+            textShadow: textGlow,
           }}>
-            WLR: <span style={{ color: '#2979ff', fontWeight: 'bold' }}>{data.wlr}</span> {/* Farb-Tipp für WLR */}
+            WLR: <span style={{ color: '#2979ff', fontWeight: 'bold' }}>{data.wlr}</span>
           </div>
         </div>
       ),
       {
         width: 800,
         height: 600,
-        fonts: [
-          {
-            name: 'VT323',
-            data: await fontData,
-            weight: 400,
-            style: 'normal',
-          },
-        ],
       },
     );
   } catch (error) {
-    return new Response('Error', { status: 500 });
+    return new Response('Error generating image', { status: 500 });
   }
 }
