@@ -23,46 +23,81 @@ export async function POST(request) {
             width: '100%',
             height: '100%',
             backgroundColor: '#0a0a0a',
-            backgroundImage: 'radial-gradient(circle at center, rgba(80, 20, 100, 0.4) 0%, rgba(20, 5, 25, 0.9) 60%, rgba(0,0,0,1) 100%)',
+            position: 'relative',
             color: '#ffffff',
             fontFamily: 'monospace',
             padding: '60px 40px',
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
-            gap: '20px',
           }}
         >
-          {/* Zeile 1: Level, Rank, Name, Ping */}
-          <div style={{ display: 'flex', fontSize: '32px', fontWeight: 'bold' }}>
-            <span>[{data.level}]</span>
-            <span>[{data.rank}]</span>
-            <span style={{ marginLeft: '10px' }}>{data.name}</span>
-            <span style={{ marginLeft: '10px' }}>{data.ping}ms</span>
-          </div>
+          {/* GitHub Hintergrundbild als absolute Ebene im Hintergrund */}
+          <img
+            src="https://raw.githubusercontent.com/DEIN-BENUTZERNAME/DEIN-REPO/main/dein-hintergrund.png"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 0,
+            }}
+          />
 
-          {/* Zeile 2: Overall */}
-          <div style={{ display: 'flex', fontSize: '38px', fontWeight: 'bold', marginTop: '10px', marginBottom: '10px' }}>
-            Overall
-          </div>
+          {/* Inhalt-Container, der sicher über dem Bild liegt */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%',
+              zIndex: 1,
+              gap: '20px',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+            }}
+          >
+            {/* Zeile 1: Level, Rank, Name, Ping (kein doppeltes ms mehr) */}
+            <div style={{ display: 'flex', fontSize: '32px', fontWeight: 'normal' }}>
+              <span>[{data.level}]</span>
+              <span>[{data.rank}]</span>
+              <span style={{ marginLeft: '10px' }}>{data.name}</span>
+              <span style={{ marginLeft: '10px' }}>{data.ping}</span>
+            </div>
 
-          {/* Zeile 3: Finals / Deaths */}
-          <div style={{ display: 'flex', fontSize: '28px' }}>
-            Finals: {data.finals} / Deaths: {data.deaths}
-          </div>
+            {/* Zeile 2: Overall (Normales Gewicht, kein Balken/Unterstrich) */}
+            <div
+              style={{
+                display: 'flex',
+                fontSize: '38px',
+                fontWeight: 'normal',
+                marginTop: '10px',
+                marginBottom: '10px',
+              }}
+            >
+              Overall
+            </div>
 
-          {/* Zeile 4: FKDR */}
-          <div style={{ display: 'flex', fontSize: '28px' }}>
-            FKDR: {data.fkdr}
-          </div>
+            {/* Zeile 3: Finals / Deaths */}
+            <div style={{ display: 'flex', fontSize: '28px' }}>
+              Finals: {data.finals} / Deaths: {data.deaths}
+            </div>
 
-          {/* Zeile 5: Wins / Losses */}
-          <div style={{ display: 'flex', fontSize: '28px' }}>
-            Wins: {data.wins} / Losses: {data.losses}
-          </div>
+            {/* Zeile 4: FKDR */}
+            <div style={{ display: 'flex', fontSize: '28px' }}>
+              FKDR: {data.fkdr}
+            </div>
 
-          {/* Zeile 6: WLR */}
-          <div style={{ display: 'flex', fontSize: '28px' }}>
-            WLR: {data.wlr}
+            {/* Zeile 5: Wins / Losses */}
+            <div style={{ display: 'flex', fontSize: '28px' }}>
+              Wins: {data.wins} / Losses: {data.losses}
+            </div>
+
+            {/* Zeile 6: WLR */}
+            <div style={{ display: 'flex', fontSize: '28px' }}>
+              WLR: {data.wlr}
+            </div>
           </div>
         </div>
       ),
