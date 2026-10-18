@@ -14,13 +14,6 @@ export async function POST(request) {
   try {
     const data = await request.json();
 
-    const vortexGradient = `
-      radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(50,10,60,1) 50%, rgba(10,50,20,1) 80%, rgba(10,10,10,1) 100%),
-      linear-gradient(135deg, rgba(30,10,40,0.3) 0%, rgba(10,30,20,0.3) 100%)
-    `;
-
-    const textGlow = '0 0 10px rgba(255, 255, 255, 0.8), 0 0 5px rgba(255, 255, 255, 0.6)';
-
     return new ImageResponse(
       (
         <div
@@ -30,70 +23,43 @@ export async function POST(request) {
             width: '100%',
             height: '100%',
             backgroundColor: '#0a0a0a',
-            backgroundImage: vortexGradient,
-            backgroundSize: 'cover',
             color: '#ffffff',
-            fontFamily: 'monospace', // Stabile System-Monospace-Schrift
             padding: '60px 40px',
-            alignItems: 'flex-start',
             justifyContent: 'flex-start',
             gap: '20px',
           }}
         >
-          {/* Zeile 1: [<level>] [<rank>] <name> <ping>ms */}
-          <div style={{
-            fontSize: '36px',
-            fontWeight: 'bold',
-            textShadow: textGlow,
-          }}>
+          {/* Zeile 1: Level, Rank, Name, Ping */}
+          <div style={{ display: 'flex', fontSize: '36px', fontWeight: 'bold' }}>
             <span>[{data.level}]</span>{' '}
-            <span style={{ color: '#aaa' }}>[{data.rank}]</span>{' '}
-            <span style={{ color: '#fff' }}>{data.name}</span>{' '}
-            <span style={{ color: '#aaa', fontSize: '28px' }}>({data.ping})</span>
+            <span style={{ color: '#aaaaaa', marginLeft: '10px' }}>[{data.rank}]</span>{' '}
+            <span style={{ color: '#ffffff', marginLeft: '10px' }}>{data.name}</span>{' '}
+            <span style={{ color: '#aaaaaa', marginLeft: '10px' }}>({data.ping})</span>
           </div>
 
           {/* Zeile 2: Overall */}
-          <div style={{
-            fontSize: '42px',
-            fontWeight: 'bold',
-            borderBottom: '4px solid white',
-            paddingBottom: '8px',
-            marginBottom: '10px',
-            textShadow: '0 0 12px rgba(255, 255, 255, 0.9)',
-          }}>
+          <div style={{ display: 'flex', fontSize: '42px', fontWeight: 'bold', borderBottom: '4px solid white', paddingBottom: '8px', marginBottom: '10px' }}>
             Overall
           </div>
 
           {/* Zeile 3: Finals / Deaths */}
-          <div style={{
-            fontSize: '32px',
-            textShadow: textGlow,
-          }}>
+          <div style={{ display: 'flex', fontSize: '32px' }}>
             Finals: {data.finals} / Deaths: {data.deaths}
           </div>
 
           {/* Zeile 4: FKDR */}
-          <div style={{
-            fontSize: '32px',
-            textShadow: textGlow,
-          }}>
-            FKDR: <span style={{ color: '#00e676', fontWeight: 'bold' }}>{data.fkdr}</span>
+          <div style={{ display: 'flex', fontSize: '32px' }}>
+            FKDR: <span style={{ color: '#00e676', marginLeft: '10px', fontWeight: 'bold' }}>{data.fkdr}</span>
           </div>
 
           {/* Zeile 5: Wins / Losses */}
-          <div style={{
-            fontSize: '32px',
-            textShadow: textGlow,
-          }}>
+          <div style={{ display: 'flex', fontSize: '32px' }}>
             Wins: {data.wins} / Losses: {data.losses}
           </div>
 
           {/* Zeile 6: WLR */}
-          <div style={{
-            fontSize: '32px',
-            textShadow: textGlow,
-          }}>
-            WLR: <span style={{ color: '#2979ff', fontWeight: 'bold' }}>{data.wlr}</span>
+          <div style={{ display: 'flex', fontSize: '32px' }}>
+            WLR: <span style={{ color: '#2979ff', marginLeft: '10px', fontWeight: 'bold' }}>{data.wlr}</span>
           </div>
         </div>
       ),
@@ -103,6 +69,6 @@ export async function POST(request) {
       },
     );
   } catch (error) {
-    return new Response('Error generating image', { status: 500 });
+    return new Response('Error: ' + error.message, { status: 500 });
   }
 }
