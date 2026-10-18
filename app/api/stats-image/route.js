@@ -26,7 +26,7 @@ export async function POST(request) {
             position: 'relative',
             color: '#ffffff',
             fontFamily: 'monospace',
-            padding: '50px 40px',
+            padding: '40px 40px',
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
           }}
@@ -53,57 +53,57 @@ export async function POST(request) {
               width: '100%',
               height: '100%',
               zIndex: 1,
-              gap: '12px',
+              gap: '10px',
               justifyContent: 'flex-start',
               alignItems: 'flex-start',
             }}
           >
-            {/* Zeile 1: Level, Rank, Name, Ping */}
-            <div style={{ display: 'flex', fontSize: '44px', fontWeight: 'normal' }}>
+            {/* Zeile 1: Level, Rank, Name, Ping (Größer: 52px) */}
+            <div style={{ display: 'flex', fontSize: '52px', fontWeight: 'normal' }}>
               <span>[{data.level}]</span>
-              <span style={{ marginLeft: '10px' }}>{data.rank}</span>
-              <span style={{ marginLeft: '15px' }}>{data.name}</span>
-              <span style={{ marginLeft: '15px' }}>{data.ping}</span>
+              <span style={{ marginLeft: '12px' }}>{data.rank}</span>
+              <span style={{ marginLeft: '16px' }}>{data.name}</span>
+              <span style={{ marginLeft: '16px' }}>{data.ping}</span>
             </div>
 
-            {/* Zeile 2: Overall */}
+            {/* Zeile 2: Overall (Größer: 40px) */}
             <div
               style={{
                 display: 'flex',
-                fontSize: '34px',
+                fontSize: '40px',
                 fontWeight: 'normal',
-                marginTop: '4px',
-                marginBottom: '4px',
+                marginTop: '2px',
+                marginBottom: '2px',
               }}
             >
               Overall
             </div>
 
-            {/* Zeile 3: Finals / Deaths */}
-            <div style={{ display: 'flex', fontSize: '30px' }}>
+            {/* Zeile 3: Finals / Deaths (Größer: 36px) */}
+            <div style={{ display: 'flex', fontSize: '36px' }}>
               Finals: {data.finals} / Deaths: {data.deaths}
             </div>
 
-            {/* Zeile 4: FKDR */}
-            <div style={{ display: 'flex', fontSize: '30px' }}>
+            {/* Zeile 4: FKDR (Größer: 36px) */}
+            <div style={{ display: 'flex', fontSize: '36px' }}>
               FKDR: {data.fkdr}
             </div>
 
-            {/* Zeile 5: Wins / Losses */}
-            <div style={{ display: 'flex', fontSize: '30px' }}>
+            {/* Zeile 5: Wins / Losses (Größer: 36px) */}
+            <div style={{ display: 'flex', fontSize: '36px' }}>
               Wins: {data.wins} / Losses: {data.losses}
             </div>
 
-            {/* Zeile 6: WLR */}
-            <div style={{ display: 'flex', fontSize: '30px' }}>
+            {/* Zeile 6: WLR (Größer: 36px) */}
+            <div style={{ display: 'flex', fontSize: '36px' }}>
               WLR: {data.wlr}
             </div>
 
             {/* Leerzeile / Abstandshalter zwischen WLR und Winstreak */}
-            <div style={{ height: '24px' }} />
+            <div style={{ height: '16px' }} />
 
-            {/* Zeile 7: Winstreak */}
-            <div style={{ display: 'flex', fontSize: '30px' }}>
+            {/* Zeile 7: Winstreak (Größer: 36px) */}
+            <div style={{ display: 'flex', fontSize: '36px' }}>
               Winstreak: {data.winstreak}
             </div>
           </div>
