@@ -26,7 +26,7 @@ export async function POST(request) {
             position: 'relative',
             color: '#ffffff',
             fontFamily: 'monospace',
-            padding: '60px 40px',
+            padding: '50px 40px',
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
           }}
@@ -53,49 +53,49 @@ export async function POST(request) {
               width: '100%',
               height: '100%',
               zIndex: 1,
-              gap: '20px',
+              gap: '14px',
               justifyContent: 'flex-start',
               alignItems: 'flex-start',
             }}
           >
-            {/* Zeile 1: Level, Rank, Name, Ping (kein doppeltes ms mehr) */}
-            <div style={{ display: 'flex', fontSize: '32px', fontWeight: 'normal' }}>
+            {/* Zeile 1: Level, Rank, Name, Ping (Größer als Overall & doppelte Klammern behoben) */}
+            <div style={{ display: 'flex', fontSize: '46px', fontWeight: 'normal' }}>
               <span>[{data.level}]</span>
-              <span>[{data.rank}]</span>
-              <span style={{ marginLeft: '10px' }}>{data.name}</span>
-              <span style={{ marginLeft: '10px' }}>{data.ping}</span>
+              <span style={{ marginLeft: '10px' }}>{data.rank}</span>
+              <span style={{ marginLeft: '15px' }}>{data.name}</span>
+              <span style={{ marginLeft: '15px' }}>{data.ping}</span>
             </div>
 
-            {/* Zeile 2: Overall (Normales Gewicht, kein Balken/Unterstrich) */}
+            {/* Zeile 2: Overall (Kleinere Schrift als die Titelzeile) */}
             <div
               style={{
                 display: 'flex',
-                fontSize: '38px',
+                fontSize: '34px',
                 fontWeight: 'normal',
-                marginTop: '10px',
-                marginBottom: '10px',
+                marginTop: '4px',
+                marginBottom: '4px',
               }}
             >
               Overall
             </div>
 
             {/* Zeile 3: Finals / Deaths */}
-            <div style={{ display: 'flex', fontSize: '28px' }}>
+            <div style={{ display: 'flex', fontSize: '30px' }}>
               Finals: {data.finals} / Deaths: {data.deaths}
             </div>
 
             {/* Zeile 4: FKDR */}
-            <div style={{ display: 'flex', fontSize: '28px' }}>
+            <div style={{ display: 'flex', fontSize: '30px' }}>
               FKDR: {data.fkdr}
             </div>
 
             {/* Zeile 5: Wins / Losses */}
-            <div style={{ display: 'flex', fontSize: '28px' }}>
+            <div style={{ display: 'flex', fontSize: '30px' }}>
               Wins: {data.wins} / Losses: {data.losses}
             </div>
 
             {/* Zeile 6: WLR */}
-            <div style={{ display: 'flex', fontSize: '28px' }}>
+            <div style={{ display: 'flex', fontSize: '30px' }}>
               WLR: {data.wlr}
             </div>
           </div>
