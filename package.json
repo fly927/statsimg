@@ -8,11 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "@types/node": "latest",
-    "@types/react": "latest",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest",
-    "typescript": "latest"
+    "react-dom": "latest"
   }
 }
