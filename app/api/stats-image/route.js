@@ -33,7 +33,7 @@ export async function POST(request) {
         >
           {/* GitHub Hintergrundbild als absolute Ebene im Hintergrund */}
           <img
-            src="https://raw.githubusercontent.com/DEIN-BENUTZERNAME/DEIN-REPO/main/dein-hintergrund.png"
+            src="https://raw.githubusercontent.com/fly927/src/refs/heads/main/bg.png"
             style={{
               position: 'absolute',
               top: 0,
