@@ -3,12 +3,13 @@ import { ImageResponse } from 'next/og';
 export const runtime = 'edge';
 
 export async function POST(request) {
-  // 1. API-Key aus dem Authorization-Header auslesen
-  const authHeader = request.headers.get('authorization');
+  // 1. API-Key direkt aus der URL auslesen (z. B. /api/stats-image?key=DEIN_KEY)
+  const { searchParams } = new URL(request.url);
+  const apiKey = searchParams.get('key');
   const expectedKey = process.env.API_KEY;
 
   // Prüfen, ob der Key übereinstimmt
-  if (!expectedKey || authHeader !== `Bearer ${expectedKey}`) {
+  if (!expectedKey || apiKey !== expectedKey) {
     return new Response('Unauthorized: Ungültiger oder fehlender API-Key', { status: 401 });
   }
 
@@ -32,14 +33,14 @@ export async function POST(request) {
         >
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontSize: 24, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '2px' }}>
-              Statistik Übersicht
+              Bedwars Statistiken
             </span>
             <span style={{ fontSize: 48, fontWeight: 'bold', marginTop: '10px' }}>
-              Live Kennzahlen
+              {data["Spieler"] || "Live Kennzahlen"}
             </span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '100%' }}>
             {Object.entries(data).map(([key, value]) => (
               <div
                 key={key}
@@ -48,12 +49,12 @@ export async function POST(request) {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   backgroundColor: '#1e293b',
-                  padding: '20px 30px',
+                  padding: '15px 25px',
                   borderRadius: '12px',
                 }}
               >
-                <span style={{ fontSize: 28, color: '#cbd5e1' }}>{key}</span>
-                <span style={{ fontSize: 32, fontWeight: 'bold', color: '#38bdf8' }}>
+                <span style={{ fontSize: 24, color: '#cbd5e1' }}>{key}</span>
+                <span style={{ fontSize: 28, fontWeight: 'bold', color: '#38bdf8' }}>
                   {String(value)}
                 </span>
               </div>
