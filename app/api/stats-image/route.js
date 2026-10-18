@@ -14,13 +14,6 @@ export async function POST(request) {
   try {
     const data = await request.json();
 
-    const vortexGradient = `
-      radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(50,10,60,1) 50%, rgba(10,50,20,1) 80%, rgba(10,10,10,1) 100%),
-      linear-gradient(135deg, rgba(30,10,40,0.3) 0%, rgba(10,30,20,0.3) 100%)
-    `;
-
-    const textGlow = '0 0 10px rgba(255, 255, 255, 0.8), 0 0 5px rgba(255, 255, 255, 0.6)';
-
     return new ImageResponse(
       (
         <div
@@ -30,79 +23,65 @@ export async function POST(request) {
             width: '100%',
             height: '100%',
             backgroundColor: '#0a0a0a',
-            backgroundImage: vortexGradient,
-            backgroundSize: 'cover',
+            backgroundImage: 'radial-gradient(circle at center, #2e0828 0%, #0d010e 60%, #000000 100%)',
             color: '#ffffff',
-            fontFamily: 'monospace', // Stabile System-Monospace-Schrift
-            padding: '60px 40px',
-            alignItems: 'flex-start',
+            fontFamily: 'monospace',
+            padding: '50px 40px',
             justifyContent: 'flex-start',
-            gap: '20px',
+            gap: '16px',
           }}
         >
-          {/* Zeile 1: [<level>] [<rank>] <name> <ping>ms */}
-          <div style={{
-            fontSize: '36px',
-            fontWeight: 'bold',
-            textShadow: textGlow,
-          }}>
-            <span>[{data.level}]</span>{' '}
-            <span style={{ color: '#aaa' }}>[{data.rank}]</span>{' '}
-            <span style={{ color: '#fff' }}>{data.name}</span>{' '}
-            <span style={{ color: '#aaa', fontSize: '28px' }}>({data.ping})</span>
+          {/* Header: [<level>][<rank>] <name> <ping>ms */}
+          <div style={{ display: 'flex', fontSize: '32px', fontWeight: 'bold' }}>
+            <span>[{data.level}]</span>
+            <span>[{data.rank}]</span>
+            <span style={{ marginLeft: '8px' }}>{data.name}</span>
+            <span style={{ marginLeft: '8px' }}>{data.ping}ms</span>
           </div>
 
-          {/* Zeile 2: Overall */}
-          <div style={{
-            fontSize: '42px',
-            fontWeight: 'bold',
-            borderBottom: '4px solid white',
-            paddingBottom: '8px',
-            marginBottom: '10px',
-            textShadow: '0 0 12px rgba(255, 255, 255, 0.9)',
-          }}>
+          {/* Section: Overall */}
+          <div
+            style={{
+              display: 'flex',
+              fontSize: '38px',
+              fontWeight: 'bold',
+              borderBottom: '3px solid #ffffff',
+              paddingBottom: '4px',
+              width: '180px',
+              marginTop: '10px',
+              marginBottom: '10px',
+            }}
+          >
             Overall
           </div>
 
-          {/* Zeile 3: Finals / Deaths */}
-          <div style={{
-            fontSize: '32px',
-            textShadow: textGlow,
-          }}>
+          {/* Finals / Deaths */}
+          <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold' }}>
             Finals: {data.finals} / Deaths: {data.deaths}
           </div>
 
-          {/* Zeile 4: FKDR */}
-          <div style={{
-            fontSize: '32px',
-            textShadow: textGlow,
-          }}>
-            FKDR: <span style={{ color: '#00e676', fontWeight: 'bold' }}>{data.fkdr}</span>
+          {/* FKDR */}
+          <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold' }}>
+            FKDR: {data.fkdr}
           </div>
 
-          {/* Zeile 5: Wins / Losses */}
-          <div style={{
-            fontSize: '32px',
-            textShadow: textGlow,
-          }}>
+          {/* Wins / Losses */}
+          <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold' }}>
             Wins: {data.wins} / Losses: {data.losses}
           </div>
 
-          {/* Zeile 6: WLR */}
-          <div style={{
-            fontSize: '32px',
-            textShadow: textGlow,
-          }}>
-            WLR: <span style={{ color: '#2979ff', fontWeight: 'bold' }}>{data.wlr}</span>
+          {/* WLR */}
+          <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold' }}>
+            WLR: {data.wlr}
           </div>
         </div>
       ),
       {
         width: 800,
-        height: 600,
+        height: 450,
       },
     );
   } catch (error) {
-    return new Response('Error generating image', { status: 500 });
+    return new Response('Error: ' + error.message, { status: 500 });
   }
 }
